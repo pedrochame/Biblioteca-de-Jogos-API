@@ -34,6 +34,9 @@ db_config = {
     "database": DB_DATABASE,
 }
 
+# URL da API
+url_api = 'https://api-bj.up.railway.app'
+
 # Função para verificar se já existe um jogo com mesmo nome e plataforma
 
 
@@ -56,7 +59,7 @@ def verificaSeJogoExiste(id, nome, plataforma):
 # Consultar (todos)
 
 
-@app.route('https://api-bj.up.railway.app/jogos', methods=['GET'])
+@app.route(url_api+'/jogos', methods=['GET'])
 def obterJogos():
 
     conn = mysql.connector.connect(**db_config)
@@ -77,7 +80,7 @@ def obterJogos():
 # Consultar (id)
 
 
-@app.route('/jogos/<int:id>', methods=['GET'])
+@app.route(url_api+'/<int:id>', methods=['GET'])
 def obterJogoPorId(id):
 
     conn = mysql.connector.connect(**db_config)
@@ -99,7 +102,7 @@ def obterJogoPorId(id):
 # Criar
 
 
-@app.route('/jogos', methods=['POST'])
+@app.route(url_api+'/jogos', methods=['POST'])
 def incluirJogo():
     jogo = request.get_json()
 
@@ -126,7 +129,7 @@ def incluirJogo():
 
 # Editar
 
-@app.route('/jogos/<int:id>', methods=['PUT'])
+@app.route(url_api+'/<int:id>', methods=['PUT'])
 def editarJogoPorId(id):
     jogoAlterado = request.get_json()
 
@@ -151,7 +154,7 @@ def editarJogoPorId(id):
 # Deletar
 
 
-@app.route('/jogos/<int:id>', methods=['DELETE'])
+@app.route(url_api+'/<int:id>', methods=['DELETE'])
 def deletarJogoPorId(id):
     # conn = sqlite3.connect('Jogos.db')
     conn = mysql.connector.connect(**db_config)
