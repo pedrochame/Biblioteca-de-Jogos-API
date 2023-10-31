@@ -87,7 +87,7 @@ def obterJogoPorId(id):
     cursor = conn.cursor()
 
     consulta = "select * from info where id = %s"
-    cursor.execute(consulta, (id))
+    cursor.execute(consulta, (id,))
     registro = cursor.fetchall()[0]
     jogo = {
         'id': registro[0],
@@ -160,7 +160,7 @@ def deletarJogoPorId(id):
     conn = mysql.connector.connect(**db_config)
     cursor = conn.cursor()
     consulta = "delete from info where id = %s"
-    cursor.execute(consulta, (id))
+    cursor.execute(consulta, (id,))
     conn.commit()
     conn.close()
     return jsonify("Remoção feita com sucesso!")
