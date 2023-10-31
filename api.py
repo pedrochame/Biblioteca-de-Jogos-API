@@ -134,8 +134,8 @@ def incluirJogo():
     try:
         cursor.execute("select id from info order by id desc")
         novoId = cursor.fetchall()[0][0] + 1
-        cursor.execute(f"insert into info values('{novoId}', '{
-            jogo["nome"]}', '{jogo["plataforma"]}', '{jogo["capa"]}')")
+        cursor.execute(f"insert into info values('{novoId}', '{jogo["nome"]}', '{
+                       jogo["plataforma"]}', '{jogo["capa"]}')")
         conn.commit()
         conn.close()
         return jsonify("Adição feita com sucesso!")
