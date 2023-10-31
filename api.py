@@ -34,9 +34,6 @@ db_config = {
     "database": DB_DATABASE,
 }
 
-# URL da API
-url_api = 'https://api-bj.up.railway.app'
-
 # Função para verificar se já existe um jogo com mesmo nome e plataforma
 
 
