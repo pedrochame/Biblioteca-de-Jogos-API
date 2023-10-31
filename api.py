@@ -40,8 +40,8 @@ db_config = {
 def verificaSeJogoExiste(id, nome, plataforma):
     conn = mysql.connector.connect(**db_config)
     cursor = conn.cursor()
-    cursor.execute(
-        f"select * from info where nome='{nome}' and plataforma='{plataforma}'")
+    consulta = "select * from info where nome=%s and plataforma=%s"
+    cursor.execute(consulta, (nome, plataforma))
     registros = cursor.fetchall()
     for reg in registros:
         if (id == 0):
@@ -83,7 +83,8 @@ def obterJogoPorId(id):
     conn = mysql.connector.connect(**db_config)
     cursor = conn.cursor()
 
-    cursor.execute(f'select * from info where id = {id}')
+    consulta = "select * from info where id = %s"
+    cursor.execute(consulta, (id))
     registro = cursor.fetchall()[0]
     jogo = {
         'id': registro[0],
@@ -111,8 +112,9 @@ def incluirJogo():
     try:
         cursor.execute("select id from info order by id desc")
         novoId = cursor.fetchall()[0][0] + 1
-        cursor.execute(f"insert into info values('{novoId}', '{jogo["nome"]}', '{
-                       jogo["plataforma"]}', '{jogo["capa"]}')")
+        consulta = "insert into info values(%s,%s,%s)"
+        cursor.execute(
+            consulta, (novoId, jogo["nome"], jogo["plataforma"], jogo["capa"]))
         conn.commit()
         conn.close()
         return jsonify("Adição feita com sucesso!")
@@ -122,6 +124,30 @@ def incluirJogo():
         return jsonify("Erro ao gravar no banco.")
 
 
+# Editar
+
+@app.route('/jogos/<int:id>', methods=['PUT'])
+def editarJogoPorId(id):
+    jogoAlterado = request.get_json()
+
+    conn = mysql.connector.connect(**db_config)
+    cursor = conn.cursor()
+
+    if (verificaSeJogoExiste(id, jogoAlterado["nome"], jogoAlterado["plataforma"])):
+        return jsonify("Esse jogo já existe na biblioteca.")
+
+    try:
+        consulta = "update info set nome =%s, plataforma=%s, capa =%s where id = %s"
+        cursor.execute(
+            consulta, (jogoAlterado["nome"], jogoAlterado["plataforma"], jogoAlterado["capa"], id))
+        conn.commit()
+        conn.close()
+        return jsonify("Edição feita com sucesso!")
+    except:
+        print("Erro ao gravar no banco.")
+        conn.close()
+        return jsonify("Erro ao gravar no banco.")
+
 # Deletar
 
 
@@ -130,7 +156,8 @@ def deletarJogoPorId(id):
     # conn = sqlite3.connect('Jogos.db')
     conn = mysql.connector.connect(**db_config)
     cursor = conn.cursor()
-    cursor.execute(f"delete from info where id = '{id}'")
+    consulta = "delete from info where id = %s"
+    cursor.execute(consulta, (id))
     conn.commit()
     conn.close()
     return jsonify("Remoção feita com sucesso!")
