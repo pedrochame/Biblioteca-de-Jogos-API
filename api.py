@@ -56,7 +56,7 @@ def verificaSeJogoExiste(id, nome, plataforma):
 # Consultar (todos)
 
 
-@app.route('/jogos', methods=['GET'])
+@app.route('https://api-bj.up.railway.app/jogos', methods=['GET'])
 def obterJogos():
 
     conn = mysql.connector.connect(**db_config)
