@@ -102,7 +102,7 @@ def incluirJogo():
     try:
         cursor.execute("select id from info order by id desc")
         novoId = cursor.fetchall()[0][0] + 1
-        consulta = "insert into info values(%s,%s,%s)"
+        consulta = "insert into info values(%s,%s,%s,%s)"
         cursor.execute(
             consulta, (novoId, jogo["nome"], jogo["plataforma"], jogo["capa"]))
         conn.commit()
