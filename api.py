@@ -94,29 +94,6 @@ def obterJogoPorId(id):
     conn.close()
     return jsonify(jogo)
 
-# Editar
-
-
-@app.route('/jogos/<int:id>', methods=['PUT'])
-def editarJogoPorId(id):
-    jogoAlterado = request.get_json()
-
-    conn = mysql.connector.connect(**db_config)
-    cursor = conn.cursor()
-
-    if (verificaSeJogoExiste(id, jogoAlterado["nome"], jogoAlterado["plataforma"])):
-        return jsonify("Esse jogo já existe na biblioteca.")
-
-    try:
-        cursor.execute(f"update info set nome = '{jogoAlterado["nome"]}', plataforma = '{
-                       jogoAlterado["plataforma"]}', capa = '{jogoAlterado["capa"]}' where id = {id}")
-        conn.commit()
-        conn.close()
-        return jsonify("Edição feita com sucesso!")
-    except:
-        print("Erro ao gravar no banco.")
-        conn.close()
-        return jsonify("Erro ao gravar no banco.")
 
 # Criar
 
@@ -134,7 +111,8 @@ def incluirJogo():
     try:
         cursor.execute("select id from info order by id desc")
         novoId = cursor.fetchall()[0][0] + 1
-        cursor.execute(f"insert into info values('{novoId}', '{jogo["nome"]}', '{jogo["plataforma"]}', '{jogo["capa"]}')")
+        cursor.execute(f"insert into info values('{novoId}', '{jogo["nome"]}', '{
+                       jogo["plataforma"]}', '{jogo["capa"]}')")
         conn.commit()
         conn.close()
         return jsonify("Adição feita com sucesso!")
