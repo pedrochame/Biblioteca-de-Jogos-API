@@ -1,13 +1,3 @@
-# API - Um lugar para disponibilizar recursos/funcionalidades
-# 1 - Objetivo: Criar uma API que disponibiliza a consulta, criação, edição e exclusão de jogos
-# 2 - URL Base: localhost
-# 3 - Endpoints: localhost/jogos (GET)
-#                localhost/jogos (POST)
-#                localhost/jogos/id (GET)
-#                localhost/jogos/id (PUT)
-#                localhost/jogos/id (DELETE)
-# 4 - Recursos: Jogos
-
 # Importando bibliotecas
 from decouple import config
 from flask import Flask, jsonify, request
