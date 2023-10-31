@@ -59,7 +59,7 @@ def verificaSeJogoExiste(id, nome, plataforma):
 # Consultar (todos)
 
 
-@app.route(url_api+'/jogos', methods=['GET'])
+@app.route('/jogos', methods=['GET'])
 def obterJogos():
 
     conn = mysql.connector.connect(**db_config)
@@ -80,7 +80,7 @@ def obterJogos():
 # Consultar (id)
 
 
-@app.route(url_api+'/<int:id>', methods=['GET'])
+@app.route('/jogos/<int:id>', methods=['GET'])
 def obterJogoPorId(id):
 
     conn = mysql.connector.connect(**db_config)
@@ -102,7 +102,7 @@ def obterJogoPorId(id):
 # Criar
 
 
-@app.route(url_api+'/jogos', methods=['POST'])
+@app.route('/jogos', methods=['POST'])
 def incluirJogo():
     jogo = request.get_json()
 
@@ -129,7 +129,7 @@ def incluirJogo():
 
 # Editar
 
-@app.route(url_api+'/<int:id>', methods=['PUT'])
+@app.route('/jogos/<int:id>', methods=['PUT'])
 def editarJogoPorId(id):
     jogoAlterado = request.get_json()
 
@@ -154,7 +154,7 @@ def editarJogoPorId(id):
 # Deletar
 
 
-@app.route(url_api+'/<int:id>', methods=['DELETE'])
+@app.route('/jogos/<int:id>', methods=['DELETE'])
 def deletarJogoPorId(id):
     # conn = sqlite3.connect('Jogos.db')
     conn = mysql.connector.connect(**db_config)
