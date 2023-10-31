@@ -108,10 +108,8 @@ def editarJogoPorId(id):
         return jsonify("Esse jogo já existe na biblioteca.")
 
     try:
-        cursor.execute(f"update info set nome = '{jogoAlterado["nome"]}', 
-                       plataforma = '{jogoAlterado["plataforma"]}',
-                       capa = '{jogoAlterado["capa"]}'
-                       where id = {id}")
+        cursor.execute(f"update info set nome = '{jogoAlterado["nome"]}', plataforma = '{
+                       jogoAlterado["plataforma"]}', capa = '{jogoAlterado["capa"]}' where id = {id}")
         conn.commit()
         conn.close()
         return jsonify("Edição feita com sucesso!")
